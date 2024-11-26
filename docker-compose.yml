@@ -14,6 +14,9 @@ services:
       DATABASE_TYPE: postgres
       DATABASE_NAME: ponte
       ENVIRONMENT: development
+      API_KEY: api-key-123
+    ports:
+      - "3000:3000"
     depends_on:
       postgres:
         condition: service_healthy

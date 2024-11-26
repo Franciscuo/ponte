@@ -93,18 +93,31 @@ id, fecha_creacion, prioridad, agente, fecha_asignacion, fecha_resolucion
 2, 2021-01-01 08:00:00, 2, 2, 2021-01-01 08:00:00, 2021-01-01 08:02:00
 3, 2021-01-01 08:00:00, 3, 3, 2021-01-01 08:00:00, 2021-01-01 08:02:00
 
-## envs for local development
-### MICROSERVICE
-ENVIRONMENT=develop
-APP_NAME=ponte
-PORT=3000
-TIMEOUT=10000
-API_KEY=api-key-123
+## Local run
 
-### DATABASE
-DATABASE_NAME=ponte
-DATABASE_TYPE=postgres
-DATABASE_HOST=localhost
-DATABASE_PORT=5432
-DATABASE_USERNAME=postgres
-DATABASE_PASSWORD=postgres
+Necesitas tener instalado docker y docker-compose en tu máquina.
+
+Para levantar el proyecto en local, sigue los siguientes pasos:
+
+```bash
+docker-compose up
+```
+
+Este comando levantará el proyecto en local y podrás acceder a la documentación de la API en la siguiente URL:
+
+```
+http://localhost:3000/api
+```
+
+El endpoint para procesar el archivo CSV es el siguiente:
+
+```
+curl --location 'http://127.0.0.1:3000/tickets/assign' \
+--header 'x-api-key: api-key-123' \
+--header 'Content-Type: application/json' \
+--data '{
+    "agent_count": 3
+}'
+```
+
+Donde `agent_count` es el número de agentes que se desea simular.
