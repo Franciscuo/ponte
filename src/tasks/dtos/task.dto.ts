@@ -1,16 +1,26 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDate, IsNumber, IsString, IsNotEmpty } from 'class-validator';
+import { IsDate, IsNumber, IsNotEmpty } from 'class-validator';
 
-export class AgentDto {
+export class TaskDto {
   @ApiProperty({ name: 'id' })
   @IsNotEmpty()
   @IsNumber()
   readonly id: number;
 
-  @ApiProperty({ name: 'name' })
+  @ApiProperty({ name: 'status_id' })
   @IsNotEmpty()
-  @IsString()
-  readonly name: string;
+  @IsNumber()
+  readonly statusId: number;
+
+  @ApiProperty({ name: 'agent_id' })
+  @IsNotEmpty()
+  @IsNumber()
+  readonly agentId: number;
+
+  @ApiProperty({ name: 'ticket_id' })
+  @IsNotEmpty()
+  @IsNumber()
+  readonly ticketId: number;
 
   @ApiProperty({ name: 'created_at' })
   @IsNotEmpty()

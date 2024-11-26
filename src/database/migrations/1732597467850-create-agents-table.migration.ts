@@ -17,6 +17,11 @@ export class CreateAgentsTable1732597467850 implements MigrationInterface {
             isNullable: false,
           },
           {
+            name: 'enabled',
+            type: 'boolean',
+            default: false,
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             isNullable: false,

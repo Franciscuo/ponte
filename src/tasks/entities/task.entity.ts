@@ -9,6 +9,7 @@ import {
   UpdateDateColumn,
   DeleteDateColumn,
   PrimaryGeneratedColumn,
+  AfterInsert,
 } from 'typeorm';
 
 import { Agent } from 'src/agents/entities';

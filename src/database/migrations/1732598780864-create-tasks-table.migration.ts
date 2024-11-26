@@ -32,6 +32,16 @@ export class CreateTasksTable1732598780864 implements MigrationInterface {
             isNullable: false,
           },
           {
+            name: 'asignation_date',
+            type: 'timestamp',
+            isNullable: false,
+          },
+          {
+            name: 'resolution_date',
+            type: 'timestamp',
+            isNullable: true,
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             isNullable: false,

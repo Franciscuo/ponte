@@ -17,6 +17,9 @@ export class Agent {
   @Column({ name: 'name', type: 'varchar' })
   name: string;
 
+  @Column({ name: 'enabled', type: 'boolean', default: false })
+  enabled: boolean;
+
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt: Date;
 
