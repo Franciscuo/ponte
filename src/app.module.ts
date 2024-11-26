@@ -2,7 +2,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 
+import { TasksModule } from './tasks/tasks.module';
 import { HealthModule } from './health/health.module';
+import { AgentsModule } from './agents/agents.module';
+import { TicketsModule } from './tickets/tickets.module';
 import { databaseConfig } from './config/database.config';
 import { applicationConfig } from './config/application.config';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
@@ -19,7 +22,10 @@ import { LoggerMiddleware } from './middlewares/logger.middleware';
         ...configService.get('database'),
       }),
     }),
+    TasksModule,
     HealthModule,
+    AgentsModule,
+    TicketsModule,
   ],
 })
 export class AppModule implements NestModule {
