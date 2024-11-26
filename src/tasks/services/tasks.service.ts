@@ -31,11 +31,10 @@ export class TasksService {
       };
     });
 
-    const agentWithLessPriorityPoints = agentsWithPriorityPoints.reduce(
-      (prev, current) => {
-        return prev.priorityPoints < current.priorityPoints ? prev : current;
-      },
+    const sortedArray = agentsWithPriorityPoints.sort(
+      (a, b) => Number(a.priorityPoints) - Number(b.priorityPoints),
     );
+    const agentWithLessPriorityPoints = sortedArray[0];
 
     const taskSaved = await this.tasksRepository.createTask({
       agentId: agentWithLessPriorityPoints.id,
