@@ -92,3 +92,19 @@ id, fecha_creacion, prioridad, agente, fecha_asignacion, fecha_resolucion
 1, 2021-01-01 08:00:00, 1, 1, 2021-01-01 08:00:00, 2021-01-01 08:02:00
 2, 2021-01-01 08:00:00, 2, 2, 2021-01-01 08:00:00, 2021-01-01 08:02:00
 3, 2021-01-01 08:00:00, 3, 3, 2021-01-01 08:00:00, 2021-01-01 08:02:00
+
+## envs for local development
+### MICROSERVICE
+ENVIRONMENT=develop
+APP_NAME=ponte
+PORT=3000
+TIMEOUT=10000
+API_KEY=api-key-123
+
+### DATABASE
+DATABASE_NAME=ponte
+DATABASE_TYPE=postgres
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_USERNAME=postgres
+DATABASE_PASSWORD=postgres
