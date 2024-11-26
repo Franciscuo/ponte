@@ -55,4 +55,10 @@ export class TasksRepository extends Repository<Task> {
       .orderBy('SUM(ticket.priority)', 'ASC')
       .getRawMany();
   }
+
+  public async getAllTicketWithTasks(): Promise<Task[]> {
+    return this.find({
+      relations: ['ticket'],
+    });
+  }
 }

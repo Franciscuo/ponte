@@ -9,9 +9,12 @@ import { TaskStatesRepository } from './repositories/task-states.repository';
 import { Agent } from '../agents/entities';
 import { AgentsRepository } from '../agents/repositories/agents.repository';
 
+import { ReportsService } from '../reports/services/reports.service';
+
 @Module({
   providers: [
     TasksService,
+    ReportsService,
     TasksRepository,
     AgentsRepository,
     TaskStatesRepository,

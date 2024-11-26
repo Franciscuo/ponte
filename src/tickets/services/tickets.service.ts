@@ -35,5 +35,10 @@ export class TicketsService {
     for (const ticket of tickets_ordered_by_priority) {
       await this.tasksService.createAndAssign(ticket.id);
     }
+
+    //delay 10s
+    await new Promise((resolve) => setTimeout(resolve, 10000));
+
+    await this.tasksService.generateReport();
   }
 }

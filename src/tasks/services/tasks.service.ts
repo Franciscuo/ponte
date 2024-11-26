@@ -2,13 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 
 import { TaskDto } from '../dtos';
+import { WriteTicketDto } from 'src/reports/dtos';
 import { TASK_STATES_ENUM } from '../enums/task-states.enum';
 import { TasksRepository } from '../repositories/tasks.repository';
+import { ReportsService } from '../../reports/services/reports.service';
 import { AgentsRepository } from 'src/agents/repositories/agents.repository';
 
 @Injectable()
 export class TasksService {
   constructor(
+    private readonly reportsService: ReportsService,
     private readonly tasksRepository: TasksRepository,
     private readonly agentsRepository: AgentsRepository,
   ) {}
@@ -55,5 +58,22 @@ export class TasksService {
     });
 
     return plainToInstance(TaskDto, task);
+  }
+
+  public async generateReport(): Promise<void> {
+    const tasks = await this.tasksRepository.getAllTicketWithTasks();
+
+    const writeReport = tasks.map((task) =>
+      plainToInstance(WriteTicketDto, {
+        id: task.ticket.id,
+        fecha_creacion: task.ticket.createdAt,
+        prioridad: task.ticket.priority,
+        agente: task.agentId,
+        fecha_asignacion: task.asignationDate,
+        fecha_resolucion: task.resolutionDate,
+      }),
+    );
+
+    await this.reportsService.writeCSV(writeReport);
   }
 }
