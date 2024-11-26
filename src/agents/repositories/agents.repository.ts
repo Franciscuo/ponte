@@ -18,11 +18,12 @@ export class AgentsRepository extends Repository<Agent> {
   }
 
   public async enableAgents(count: number): Promise<void> {
-    await this.createQueryBuilder()
-      .update(Agent)
-      .set({ enabled: true })
-      .limit(count)
-      .execute();
+    const agents = await this.find({ take: count });
+    for (const agent of agents) {
+      agent.enabled = true;
+    }
+
+    await this.save(agents);
   }
 
   public async getEnabledAgents(): Promise<Agent[]> {

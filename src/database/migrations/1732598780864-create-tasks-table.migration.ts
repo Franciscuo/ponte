@@ -30,6 +30,7 @@ export class CreateTasksTable1732598780864 implements MigrationInterface {
             name: 'ticket_id',
             type: 'int',
             isNullable: false,
+            isUnique: true,
           },
           {
             name: 'asignation_date',

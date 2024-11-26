@@ -1,9 +1,10 @@
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Post, Body, UseGuards, Controller } from '@nestjs/common';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { AgentDto } from '../dtos';
 import { ApiKeyGuard } from '../../auth/api-key.guard';
 import { AgentsService } from '../services/agents.service';
+import { EnableAgentsDto } from '../dtos/enable-agents.dto';
 
 @Controller('agents')
 @ApiTags('Agents')
@@ -19,7 +20,7 @@ export class AgentsController {
     isArray: true,
     description: 'Enables a number of agents',
   })
-  enableAgents(@Body() count: number): Promise<AgentDto[]> {
-    return this.agentsService.enableaAgents(count);
+  enableAgents(@Body() enableAgents: EnableAgentsDto): Promise<AgentDto[]> {
+    return this.agentsService.enableaAgents(enableAgents.count);
   }
 }

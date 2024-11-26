@@ -6,6 +6,7 @@ import { TasksModule } from './tasks/tasks.module';
 import { HealthModule } from './health/health.module';
 import { AgentsModule } from './agents/agents.module';
 import { TicketsModule } from './tickets/tickets.module';
+import { ReportsModule } from './reports/reports.module';
 import { databaseConfig } from './config/database.config';
 import { applicationConfig } from './config/application.config';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
@@ -25,6 +26,7 @@ import { LoggerMiddleware } from './middlewares/logger.middleware';
     TasksModule,
     HealthModule,
     AgentsModule,
+    ReportsModule,
     TicketsModule,
   ],
 })

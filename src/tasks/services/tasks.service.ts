@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 
 import { TaskDto } from '../dtos';
+import { TASK_STATES_ENUM } from '../enums/task-states.enum';
 import { TasksRepository } from '../repositories/tasks.repository';
 import { AgentsRepository } from 'src/agents/repositories/agents.repository';
-import { TASK_STATES_ENUM } from '../enums/task-states.enum';
 
 @Injectable()
 export class TasksService {
@@ -13,22 +13,33 @@ export class TasksService {
     private readonly agentsRepository: AgentsRepository,
   ) {}
 
-  public async createAndAssign(task: {
-    ticketId: number;
-    externalCreatedAt: Date;
-  }): Promise<TaskDto> {
+  public async createAndAssign(ticketId: number): Promise<TaskDto> {
     const agents = await this.agentsRepository.getEnabledAgents();
     const agentsIds = agents.map((agent) => agent.id);
 
     const agentsPriorityPoints =
       await this.tasksRepository.getTotalPriorityPointsByAgentIds(agentsIds);
 
-    const agentWithLessPriorityPoints = agentsPriorityPoints[0];
+    const agentsWithPriorityPoints = agents.map((agent) => {
+      const agentPriorityPoints = agentsPriorityPoints.find(
+        (agentPriorityPoints) => agentPriorityPoints.agentId === agent.id,
+      );
+
+      return {
+        ...agent,
+        priorityPoints: agentPriorityPoints?.priorityPoints || 0,
+      };
+    });
+
+    const agentWithLessPriorityPoints = agentsWithPriorityPoints.reduce(
+      (prev, current) => {
+        return prev.priorityPoints < current.priorityPoints ? prev : current;
+      },
+    );
 
     const taskSaved = await this.tasksRepository.createTask({
-      agentId: agentWithLessPriorityPoints.agentId,
-      ticketId: task.ticketId,
-      externalCreatedAt: task.externalCreatedAt,
+      agentId: agentWithLessPriorityPoints.id,
+      ticketId: ticketId,
     });
 
     setTimeout(() => {

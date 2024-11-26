@@ -11,9 +11,4 @@ export class CreateTaskDto {
   @IsNotEmpty()
   @IsNumber()
   ticketId: number;
-
-  @ApiProperty({ name: 'external_created_at' })
-  @IsNotEmpty()
-  @IsNumber()
-  externalCreatedAt: Date;
 }

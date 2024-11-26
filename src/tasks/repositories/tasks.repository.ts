@@ -16,11 +16,16 @@ export class TasksRepository extends Repository<Task> {
   }
 
   public async createTask(task: CreateTaskDto): Promise<Task> {
+    const actualTask = await this.findOneBy({ ticketId: task.ticketId });
+    if (actualTask) {
+      return actualTask;
+    }
+
     const newTask = this.create({
       statusId: TASK_STATES_ENUM.IN_PROGRESS,
       agentId: task.agentId,
       ticketId: task.ticketId,
-      createdAt: task.externalCreatedAt,
+      asignationDate: new Date(),
     });
 
     return this.save(newTask);
@@ -33,8 +38,9 @@ export class TasksRepository extends Repository<Task> {
     const currentTask = await this.findOneBy({ id: task.id });
 
     currentTask.statusId = task.statusId;
+    currentTask.resolutionDate = new Date();
 
-    return this.save(task);
+    return this.save(currentTask);
   }
 
   public async getTotalPriorityPointsByAgentIds(
@@ -46,7 +52,7 @@ export class TasksRepository extends Repository<Task> {
       .innerJoin('task.ticket', 'ticket')
       .where('task.agentId IN (:...agentIds)', { agentIds })
       .groupBy('task.agentId')
-      .orderBy('priorityPoints', 'ASC')
+      .orderBy('SUM(ticket.priority)', 'ASC')
       .getRawMany();
   }
 }

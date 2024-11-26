@@ -9,7 +9,6 @@ import {
   UpdateDateColumn,
   DeleteDateColumn,
   PrimaryGeneratedColumn,
-  AfterInsert,
 } from 'typeorm';
 
 import { Agent } from 'src/agents/entities';
@@ -41,6 +40,12 @@ export class Task {
   @ManyToOne(() => Ticket, (ticket) => ticket.id)
   @JoinColumn({ name: 'ticket_id' })
   ticket?: Ticket;
+
+  @CreateDateColumn({ name: 'asignation_date', type: 'timestamp' })
+  asignationDate: Date;
+
+  @CreateDateColumn({ name: 'resolution_date', type: 'timestamp' })
+  resolutionDate: Date;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt: Date;
